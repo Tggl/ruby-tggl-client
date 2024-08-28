@@ -1,0 +1,15 @@
+module Tggl
+  class Reporting
+    @api_key: String
+    @url: String
+    @app: String | nil
+    @app_prefix: String | nil
+    @last_report_time: int
+
+    def initialize: (String api_key, { url?: String, app?: String, app_prefix?: String } options) -> void
+
+    def send_report: -> void
+    def report_flag: (String slug, bool active, any value, any default) -> void
+    def report_context: (Hash[Symbol, any] context) -> void
+  end
+end

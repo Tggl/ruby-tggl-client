@@ -1,0 +1,12 @@
+module Tggl
+  class Response
+    @flags: Hash[Symbol, any]
+    @reporter: Reporting | nil
+
+    def initialize: (Hash[Symbol, untyped] flags, Reporting | nil reporter) -> void
+
+    def is_active?: (String slug) -> bool
+    def get: (String slug, untyped default_value) -> untyped
+    def all_active_flags: () -> Hash[Symbol, untyped]
+  end
+end

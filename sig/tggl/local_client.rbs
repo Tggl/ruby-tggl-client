@@ -1,0 +1,37 @@
+module Tggl
+  class LocalClient
+    type variation = { active: bool, value: any }
+    type rule = {
+        key: String,
+        operator: String,
+        negate?: bool,
+        rangeStart?: float,
+        rangeEnd?: float,
+        seed?: int,
+        values?: Array[String],
+        value?: String | float,
+        version?: Array[int],
+        timestamp?: int,
+        iso?: String,
+      }
+    type condition = { rules: Array[rule], variation: variation }
+    type flag = { defaultVariation: variation, conditions: Array[condition] }
+
+    @api_key: String | nil
+    @config: Hash[Symbol, flag]
+    @url: String
+    @reporter: Reporting | nil
+
+    def initialize: (String | nil api_key, { url?: String, config?: Hash[Symbol, flag], reporting?: bool | { app?: String, url?: String } } options) -> void
+
+
+    def fetch_config: -> Hash[Symbol, flag]
+    def get: (Hash[Symbol, any] context, String slug, any default_value) -> untyped
+    def is_active?: (Hash[Symbol, any] context, String slug) -> bool
+    def all_active_flags: (Hash[Symbol, any] context)-> Hash[Symbol, any]
+
+    def self.eval_flag: (flag flag, Hash[Symbol, any] context) -> variation
+    def self.eval_condition: (condition condition, Hash[Symbol, any] context) -> bool
+    def self.eval_rule: (rule rule, Hash[Symbol, any] context) -> bool
+  end
+end

@@ -1,0 +1,12 @@
+module Tggl
+  class Client
+    @api_key: String | nil
+    @url: String
+    @reporter: Reporting | nil
+
+    def initialize: (String | nil api_key, { url?: String, reporting?: bool | { app?: String, url?: String } } options) -> void
+
+    def eval_context: (Hash[Symbol, any] context) -> Response
+    def eval_contexts: (Array[Hash[Symbol, any]] contexts) -> Array[Response]
+  end
+end
