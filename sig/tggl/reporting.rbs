@@ -5,6 +5,20 @@ module Tggl
     @app: String | nil
     @app_prefix: String | nil
     @last_report_time: int
+    @flags_to_report: Hash[
+        String,
+        Hash[
+          String,
+          {
+            active: bool,
+            value?: any,
+            default?: any,
+            count: int
+          }
+        ]
+      ]
+    @received_properties_to_report: Hash[Symbol, Array[int]]
+    @received_values_to_report: Hash[Symbol, Hash[String, String | nil]]
 
     def initialize: (String api_key, { url?: String, app?: String, app_prefix?: String } options) -> void
 

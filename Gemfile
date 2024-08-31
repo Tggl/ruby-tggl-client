@@ -7,7 +7,7 @@ gemspec
 
 gem "rake", "~> 13.0"
 
-gem 'xxhash'
+gem 'xxhash' "~> 0.5"
 
 group :test do
   gem 'webmock', '~> 3.23', '>= 3.23.1'

@@ -10,7 +10,7 @@ module Tggl
       @url = options[:url] || 'https://api.tggl.io/flags'
       @reporter = api_key.nil? || options[:reporting] == false ? nil :  Reporting.new(
         api_key,
-        app_prefix: 'ruby-client:1.0.0/Client',
+        app_prefix: "ruby-client:#{VERSION}/Client",
         url: options[:reporting] == true ? nil : options[:reporting]&.[](:url),
         app: options[:reporting] == true ? nil : options[:reporting]&.[](:app)
       )
@@ -18,7 +18,7 @@ module Tggl
 
     def eval_context(context)
       response = eval_contexts([context]).first
-      raise "Unexpected empty response from Tggl" if response.nil?
+      raise StandardError.new "Unexpected empty response from Tggl" if response.nil?
 
       response
     end
@@ -39,9 +39,9 @@ module Tggl
 
       if response.code.to_i > 200
         if result.nil?
-          raise "Invalid response from Tggl: #{response.code}"
+          raise StandardError.new "Invalid response from Tggl: #{response.code}"
         end
-        raise result['error']
+        raise StandardError.new result['error']
       end
 
       result.map { |flags| Response.new(flags) }

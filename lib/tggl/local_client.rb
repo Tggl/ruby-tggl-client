@@ -12,7 +12,7 @@ module Tggl
       @url = options[:url] || 'https://api.tggl.io/config'
       @reporter = api_key.nil? || options[:reporting] == false ? nil :  Reporting.new(
         api_key,
-        app_prefix: 'ruby-client:1.0.0/LocalClient',
+        app_prefix: "ruby-client:#{VERSION}/LocalClient",
         url: options[:reporting] == true ? nil : options[:reporting]&.[](:url),
         app: options[:reporting] == true ? nil : options[:reporting]&.[](:app)
       )
@@ -32,9 +32,9 @@ module Tggl
 
       if response.code.to_i > 200
         if result.nil?
-          raise "Invalid response from Tggl: #{response.code}"
+          raise StandardError.new "Invalid response from Tggl: #{response.code}"
         end
-        raise result['error']
+        raise StandardError.new result['error']
       end
 
       @config = Hash.new
@@ -251,7 +251,7 @@ module Tggl
         return probability >= rule[:rangeStart] && probability < rule[:rangeEnd]
       end
 
-      raise "Unsupported operator #{rule[:operator]}"
+      raise StandardError.new "Unsupported operator #{rule[:operator]}"
     end
   end
 end
