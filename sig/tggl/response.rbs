@@ -3,7 +3,7 @@ module Tggl
     @flags: Hash[Symbol, any]
     @reporter: Reporting | nil
 
-    def initialize: (Hash[Symbol, untyped] flags, Reporting | nil reporter) -> void
+    def initialize: (Hash[Symbol, untyped] flags, { reporter: Reporting | nil, error?: Exception | nil } options) -> void
 
     def is_active?: (String slug) -> bool
     def get: (String slug, untyped default_value) -> untyped

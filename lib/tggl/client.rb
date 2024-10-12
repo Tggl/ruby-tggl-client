@@ -24,27 +24,31 @@ module Tggl
     end
 
     def eval_contexts(contexts)
-      uri = URI(@url)
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
+      begin
+        uri = URI(@url)
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
 
-      request = Net::HTTP::Post.new(uri.path, {
-        'X-Tggl-Api-Key' => @api_key,
-        'Content-Type' => 'application/json'
-      })
-      request.body = contexts.to_json
+        request = Net::HTTP::Post.new(uri.path, {
+          'X-Tggl-Api-Key' => @api_key,
+          'Content-Type' => 'application/json'
+        })
+        request.body = contexts.to_json
 
-      response = http.request(request)
-      result = JSON.parse(response.body, symbolize_names: true)
+        response = http.request(request)
+        result = JSON.parse(response.body, symbolize_names: true)
 
-      if response.code.to_i > 200
-        if result.nil?
-          raise StandardError.new "Invalid response from Tggl: #{response.code}"
+        if response.code.to_i > 200
+          if result.nil?
+            raise StandardError.new "Invalid response from Tggl: #{response.code}"
+          end
+          raise StandardError.new result['error']
         end
-        raise StandardError.new result['error']
-      end
 
-      result.map { |flags| Response.new(flags) }
+        result.map { |flags| Response.new(flags, reporter: @reporter) }
+      rescue
+        contexts.map { || Response.new({}, reporter: @reporter) }
+      end
     end
   end
 end
