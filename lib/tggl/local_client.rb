@@ -139,12 +139,12 @@ module Tggl
 
       if rule[:operator] === "STR_AFTER"
         return false unless value.is_a?(String)
-        return value >= rule[:value]
+        return (value >= rule[:value]) != (rule[:negate].nil? ? false : rule[:negate])
       end
 
       if rule[:operator] === "STR_BEFORE"
         return false unless value.is_a?(String)
-        return value <= rule[:value]
+        return (value <= rule[:value]) != (rule[:negate].nil? ? false : rule[:negate])
       end
 
       if rule[:operator] === "REGEXP"
@@ -179,9 +179,9 @@ module Tggl
       if rule[:operator] === "DATE_AFTER"
         if value.is_a?(String)
           val = value[0, '2000-01-01T23:59:59'.length] + ('2000-01-01T23:59:59'[value.length..] || "")
-          return rule[:iso] <= val
+          return (rule[:iso] <= val) != (rule[:negate].nil? ? false : rule[:negate])
         elsif value.is_a?(Integer) || value.is_a?(Float)
-          return value < 631_152_000_000 ? (value * 1000 >= rule[:timestamp]) : (value >= rule[:timestamp])
+          return (value < 631_152_000_000 ? (value * 1000 >= rule[:timestamp]) : (value >= rule[:timestamp])) != (rule[:negate].nil? ? false : rule[:negate])
         end
         return false
       end
@@ -189,9 +189,9 @@ module Tggl
       if rule[:operator] === "DATE_BEFORE"
         if value.is_a?(String)
           val = value[0, '2000-01-01T00:00:00'.length] + ('2000-01-01T00:00:00'[value.length..] || "")
-          return rule[:iso] >= val
+          return (rule[:iso] >= val) != (rule[:negate].nil? ? false : rule[:negate])
         elsif value.is_a?(Integer) || value.is_a?(Float)
-          return value < 631_152_000_000 ? (value * 1000 <= rule[:timestamp]) : (value <= rule[:timestamp])
+          return (value < 631_152_000_000 ? (value * 1000 <= rule[:timestamp]) : (value <= rule[:timestamp])) != (rule[:negate].nil? ? false : rule[:negate])
         end
         return false
       end
@@ -248,7 +248,7 @@ module Tggl
         return false unless value.is_a?(String) || value.is_a?(Integer) || value.is_a?(Float)
         probability = XXhash.xxh32(value.to_s, rule[:seed]) / 0xFFFFFFFF.to_f
         probability -= 1.0e-8 if probability == 1
-        return probability >= rule[:rangeStart] && probability < rule[:rangeEnd]
+        return (probability >= rule[:rangeStart] && probability < rule[:rangeEnd]) != (rule[:negate].nil? ? false : rule[:negate])
       end
 
       raise StandardError.new "Unsupported operator #{rule[:operator]}"

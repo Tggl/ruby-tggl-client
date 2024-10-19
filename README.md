@@ -1,35 +1,54 @@
-# Tggl
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://tggl.io/tggl-io-logo-white.svg">
+    <img align="center" alt="Tggl Logo" src="https://tggl.io/tggl-io-logo-black.svg" width="200rem" />
+  </picture>
+</p>
 
-TODO: Delete this and the text below, and describe your gem
+<h1 align="center">Tggl Ruby SDK</h1>
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/tggl`. To experiment with that code, run `bin/console` for an interactive prompt.
+<p align="center">
+  The Ruby SDK can be used both on the client and server to evaluate flags and report usage to the Tggl API or a <a href="https://tggl.io/developers/evaluating-flags/tggl-proxy">proxy</a>.
+</p>
 
-## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
-Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+<p align="center">
+  <a href="https://tggl.io/">🔗 Website</a>
+  •
+  <a href="https://tggl.io/developers/sdks/ruby">📚 Documentation</a>
+  •
+  <a href="https://rubygems.org/gems/tggl">📦 RubyGem</a>
+  •
+  <a href="https://www.youtube.com/@Tggl-io">🎥 Videos</a>
+</p>
 
 ## Usage
 
-TODO: Write usage instructions here
+Install the dependency:
 
-## Development
+```bash
+gem install tggl
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Start evaluating flags:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/tggl.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+```rb
+require "tggl"
+ 
+$client = Tggl::Client.new("YOUR_API_KEY")
+ 
+# An API call to Tggl is performed here
+$flags = $client.eval_context({
+  userId: "abc",
+  email: "foo@gmail.com",
+  country: "FR",
+  # ...
+})
+ 
+if $flags.is_active? "my-feature"
+  # ...
+end
+ 
+if $flags.get "my-feature" == "Variation A"
+  # ...
+end
+```

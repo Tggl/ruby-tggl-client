@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors = ["nick-keller"]
   spec.email = ["hello@tggl.io"]
 
-  spec.summary = "Tggl client for Ruby"
+  spec.summary = "Tggl Ruby SDK"
   spec.homepage = "https://tggl.io/developers/sdks/ruby"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
