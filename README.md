@@ -8,7 +8,7 @@
 <h1 align="center">Tggl Ruby SDK</h1>
 
 <p align="center">
-  The Ruby SDK can be used both on the client and server to evaluate flags and report usage to the Tggl API or a <a href="https://tggl.io/developers/evaluating-flags/tggl-proxy">proxy</a>.
+  The Ruby SDK can be used to evaluate flags and report usage to the Tggl API or a <a href="https://tggl.io/developers/evaluating-flags/tggl-proxy">proxy</a>.
 </p>
 
 <p align="center">

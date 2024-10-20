@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ["hello@tggl.io"]
 
   spec.summary = "Tggl Ruby SDK"
+  spec.description = "The Ruby SDK can be used to evaluate flags and report usage to the Tggl API or a Proxy."
   spec.homepage = "https://tggl.io/developers/sdks/ruby"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
@@ -23,7 +24,7 @@ Gem::Specification.new do |spec|
     `git ls-files -z`.split("\x0").reject do |f|
       (File.expand_path(f) == __FILE__) || f.start_with?(*%w[bin/ test/ spec/ features/ .git .circleci appveyor])
     end
-  end
+  end + ["README.md"]
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
